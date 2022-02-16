@@ -1,5 +1,4 @@
 workspace "Poly Engine"
-    location "Generated"
     language "C++"
     architecture "x86_64"
 
@@ -16,6 +15,6 @@ workspace "Poly Engine"
     targetdir ("Build/Bin/%{prj.name}/%{cfg.longname}")
 	objdir ("Build/Obj/%{prj.name}/%{cfg.longname}")
 
-group "Dependencies"
-	include "Libraries/GLFW"
-group ""
+
+include "./Libraries/libraries.lua"
+include "./Projects/projects.lua"
