@@ -4,7 +4,7 @@ Libraries = {
 
 function includeLibrary(libName) 
 	print("project including library: " .. libName)
-	includedirs ("%{wks.location}/../Libraries/" .. Libraries[libName])
+	includedirs ("%{wks.location}/Libraries/" .. Libraries[libName])
 end
 
 group "Libraries"

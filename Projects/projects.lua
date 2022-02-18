@@ -1,9 +1,10 @@
 Projects = { 
-	"PolyEngine"
+	"PolyEngine",
+    "Polygon"
 }
 
 function includeProject(projName) 
-	includedirs (Projects[libName])
+	includedirs ("%{wks.location}/Projects/" .. projName .. "/src")
 end
 
 group ""

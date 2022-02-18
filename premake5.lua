@@ -2,6 +2,8 @@ workspace "Poly Engine"
     language "C++"
     architecture "x86_64"
 
+    startproject "Polygon"
+
     configurations { "Dubug", "Release" }
 
     filter { "configurations:Debug" }
