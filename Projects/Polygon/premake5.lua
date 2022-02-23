@@ -2,6 +2,7 @@
 project "Polygon"
 	-- kind is used to indicate the type of this project.
 	kind "ConsoleApp"
+	staticruntime "On"
 
 	-- We specify where the source files are.
 	-- It would be better to separate header files in a folder and sources
@@ -14,5 +15,4 @@ project "Polygon"
 
 	-- We need GLFW, so we include it
 	includeProject("PolyEngine")
-    includeLibrary("GLFW")
-    links {"GLFW", "PolyEngine"}
+    links {"PolyEngine"}

@@ -1,6 +1,7 @@
-#include "Test.h"
+#include "core/Main.h"
 
-int main() {
-	Test test;
-	test.test();
+#include "TestApplication.h"
+
+Application* CreateApplication() {
+	return new TestApplication;
 }

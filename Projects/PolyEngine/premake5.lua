@@ -2,6 +2,7 @@
 project "PolyEngine"
 	-- kind is used to indicate the type of this project.
 	kind "StaticLib"
+	staticruntime "On"
 
 	-- We specify where the source files are.
 	-- It would be better to separate header files in a folder and sources
@@ -12,6 +13,17 @@ project "PolyEngine"
         "src/**.h",
     }
 
+	includedirs {
+		"src"
+	}
+
 	-- We need GLFW, so we include it
     includeLibrary("GLFW")
-    links {"GLFW"}
+    includeLibrary("Glad")
+    links {"GLFW", "Glad"}
+	
+	filter "system:windows"
+		defines { "POLY_PLATFORM_WINDOWS" }
+
+	filter "system:linux"
+		defines { "POLY_PLATFORM_LINUX" }

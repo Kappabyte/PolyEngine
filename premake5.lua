@@ -4,7 +4,7 @@ workspace "Poly Engine"
 
     startproject "Polygon"
 
-    configurations { "Dubug", "Release" }
+    configurations { "Debug", "Release" }
 
     filter { "configurations:Debug" }
         symbols "On"
