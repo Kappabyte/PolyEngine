@@ -2,6 +2,10 @@
 
 #include "../events/EventNode.h"
 
-class Layer : public EventNode {
-
-};
+namespace Poly {
+	class Layer : public EventNode {
+	public:
+		Layer(uint16_t priority) : EventNode(priority) {}
+		virtual void update() = 0;
+	};
+}

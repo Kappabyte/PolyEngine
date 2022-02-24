@@ -5,21 +5,12 @@
 namespace Poly {
 	namespace Renderer {
 
-		void ClearColor(float r, float g, float b, float a) {
-			RenderAPI::getAPI()->clearColor(r, g, b, a);
-		}
+		void ClearColor(float r, float g, float b, float a);
 
-		void Clear() {
-			RenderAPI::getAPI()->clearDepthBuffer();
-			RenderAPI::getAPI()->clearColorBuffer();
-		}
+		void Clear();
 
-		void ClearColorBuffer() {
-			RenderAPI::getAPI()->clearColorBuffer();
-		}
+		void ClearColorBuffer();
 
-		void ClearDepthBuffer() {
-			RenderAPI::getAPI()->clearDepthBuffer();
-		}
+		void ClearDepthBuffer();
 	}
 }

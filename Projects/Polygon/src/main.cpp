@@ -1,7 +1,7 @@
-#include "core/Main.h"
+#include "poly/core/Main.h"
 
 #include "TestApplication.h"
 
-Application* CreateApplication() {
+Poly::Application* Poly::CreateApplication() {
 	return new TestApplication;
 }

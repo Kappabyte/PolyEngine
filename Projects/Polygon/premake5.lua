@@ -14,5 +14,6 @@ project "Polygon"
     }
 
 	-- We need GLFW, so we include it
+    includeLibrary("GLFW")
 	includeProject("PolyEngine")
     links {"PolyEngine"}

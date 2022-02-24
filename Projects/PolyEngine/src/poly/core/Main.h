@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Application.h"
+#include <poly/core/Application.cpp>
 
 int main() {
-	Application* application = CreateApplication();
+	Poly::Application* application = Poly::CreateApplication();
 
 	application->start();
 }

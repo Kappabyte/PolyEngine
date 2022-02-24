@@ -1,6 +1,7 @@
 #include "Application.h"
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
+#include <iostream>
 #include <platform/system/windows/WindowsWindow.h>
 
 namespace Poly {
@@ -22,8 +23,11 @@ namespace Poly {
 		Window* window;
 
 		#ifdef POLY_PLATFORM_WINDOWS
+		std::cout << "Platform: Windows" << std::endl;
 			window = new WindowsWindow(width, height, title);
-		#elif defined POLY_PLATFORM_LINUX
+
+		#else
+		std::cout << "Platform: Unknown" << std::endl;
 		#endif
 
 		windows.push_back(window);

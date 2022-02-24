@@ -11,6 +11,14 @@ workspace "Poly Engine"
         
     filter { "configurations:Release" }
         optimize "On"
+    
+        
+	
+	filter "system:windows"
+        defines { "POLY_PLATFORM_WINDOWS" }
+
+    filter "system:linux"
+        defines { "POLY_PLATFORM_LINUX" }
 
     filter {}
 

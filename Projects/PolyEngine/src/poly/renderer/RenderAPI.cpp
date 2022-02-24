@@ -3,16 +3,18 @@
 #include <platform/api/opengl/OpenGLRenderAPI.h>
 
 namespace Poly {
+
+	RenderAPI* RenderAPI::renderAPI = nullptr;
+
 	void RenderAPI::create(RendererAPI api) {
 		switch (api) {
 		case RendererAPI::OPENGL:
-			RenderAPI::api = new OpenGLRenderAPI;
+			renderAPI = new OpenGLRenderAPI;
 			break;
-		case RendererAPI::NULL:
 		}
 	}
 
 	RenderAPI* RenderAPI::getAPI() {
-		return api;
+		return renderAPI;
 	}
 }

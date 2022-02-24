@@ -3,8 +3,7 @@
 namespace Poly {
 
 	enum class RendererAPI {
-		OPENGL,
-		NULL
+		OPENGL
 	};
 
 	class RenderAPI {
@@ -18,6 +17,6 @@ namespace Poly {
 		virtual void clearDepthBuffer() = 0;
 		virtual void clearColor(float r, float g, float b, float a) = 0;
 	private:
-		static RenderAPI* api;
+		static RenderAPI* renderAPI;
 	};
 }

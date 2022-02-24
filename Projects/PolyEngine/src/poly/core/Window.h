@@ -1,10 +1,11 @@
 #pragma once
 
 #include <thread>
+#include <list>
 
 #include "poly/events/EventNode.h"
 #include "poly/events/ExampleEvent.h"
-#include "poly/layers/Layer.h"
+#include "poly/layers/LayerStack.h"
 
 namespace Poly {
 	class Window : public EventNode {
@@ -12,17 +13,23 @@ namespace Poly {
 		Window(uint32_t width, uint32_t height, std::string name = "Poly Engine Window");
 		~Window();
 
+		void open();
 		void close();
 
-		void update();
+		void pushLayer(Layer* layer);
+
+		virtual void update() = 0;
 		void onExampleEvent(ExampleEvent* e);
 	protected:
 		virtual void onInit() = 0;
 	private:
 		using EventNode::addChild;
-		using EventNode::getChildren;
 		using EventNode::getPriority;
-	private:
+		using EventNode::getChildren;
+
+		virtual void internalUpdate();
+
+	protected:
 		std::string title;
 		int width;
 		int height;
@@ -33,6 +40,7 @@ namespace Poly {
 
 		std::thread updateThread;
 
-		void* windowHandle;
+		void* windowHandle = nullptr;
+		LayerStack* layerStack = new LayerStack();
 	};
 }
