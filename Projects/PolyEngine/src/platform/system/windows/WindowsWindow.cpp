@@ -29,7 +29,7 @@ namespace Poly {
 
 		while (windowOpen) {
 			layerStack->updateLayers();
-			dispatch(&ExampleEvent("test"));
+			dispatch(new ExampleEvent("test"));
 			context->swapBuffers(windowHandle);
 			glfwPollEvents();
 

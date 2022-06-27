@@ -4,4 +4,6 @@
 *.vcxproj.user
 .vs/
 
+Makefile
+
 Build/
