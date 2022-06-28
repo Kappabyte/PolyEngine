@@ -2,3 +2,6 @@
 	path = Libraries/GLFW
 	url = https://github.com/glfw/GLFW
     ignore = dirty
+[submodule "Libraries/glm"]
+	path = Libraries/glm
+	url = https://github.com/g-truc/glm
