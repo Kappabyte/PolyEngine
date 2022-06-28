@@ -20,4 +20,5 @@ project "PolyEngine"
 	-- We need GLFW, so we include it
     includeLibrary("GLFW")
     includeLibrary("Glad")
+    includeLibrary("glm")
     links {"GLFW", "Glad"}

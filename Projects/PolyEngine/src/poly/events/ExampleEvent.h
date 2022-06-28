@@ -13,6 +13,3 @@ private:
     std::string text;
 };
 
-class CloseEvent : public Event {
-};
-

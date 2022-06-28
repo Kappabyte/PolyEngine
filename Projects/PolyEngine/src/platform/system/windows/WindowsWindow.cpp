@@ -33,13 +33,13 @@ namespace Poly {
 			context->swapBuffers(windowHandle);
 			glfwPollEvents();
 
-			if (glfwWindowShouldClose((GLFWwindow*)windowHandle)) {
-				CloseEvent e = CloseEvent();
-				dispatch(&e);
-				if (!e.isCancelled()) {
-					windowOpen = false;
-				}
-			}
+			// if (glfwWindowShouldClose((GLFWwindow*)windowHandle)) {
+			// 	CloseEvent e = CloseEvent();
+			// 	dispatch(&e);
+			// 	if (!e.isCancelled()) {
+			// 		windowOpen = false;
+			// 	}
+			// }
 		}
 	}
 

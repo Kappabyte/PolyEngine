@@ -13,6 +13,7 @@ namespace Poly {
 			while (iter != it->second->end()) {
 				(*iter)->exec(e);
 				if (e->isCancelled()) {
+					delete e;
 					return;
 				}
 				iter++;
@@ -28,5 +29,7 @@ namespace Poly {
 				return;
 			}
 		}
+
+		delete e;
 	}
 }

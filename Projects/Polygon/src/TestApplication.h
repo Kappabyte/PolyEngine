@@ -1,5 +1,5 @@
 #pragma once
-#include "poly/core/Application.h"
+#include <poly/core/Application.h>
 #include "TestLayer.h"
 
 #include <poly/events/EventNode.h>
@@ -20,12 +20,15 @@ public:
 		Poly::Window* window1 = createWindow("Test Window 1", 600, 300);
 		window1->open();
 
-		window1->pushLayer(new TestLayer(1, "Layer 1"));
+		window1->pushLayer(new TestLayer(10, "Layer 1"));
 
+		std::cout << "Logging Handler" << std::endl;
 		window1->logHandler();
+		std::cout << "Done Logging Handler" << std::endl;
 
-		//Poly::Window* window2 = createWindow("Test Window 1", 600, 300);
-		//window2->open();
+		Poly::Window* window2 = createWindow("Test Window 2", 600, 300);
+		window2->pushLayer(new TestLayer(0, "Layer 2"));
+		window2->open();
 	}
 
 	~TestApplication() {

@@ -1,4 +1,4 @@
-#include "poly/core/Main.h"
+#include <poly/core/Application.h>
 
 #include "TestApplication.h"
 

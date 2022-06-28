@@ -7,6 +7,8 @@ namespace Poly {
 		title(title), width(width), height(height) {
 
 		std::cout << "Created Window" << std::endl;
+
+		addChild(layerStack);
 	}
 
 	void Window::open() {
@@ -18,13 +20,13 @@ namespace Poly {
 	}
 
 	void Window::internalUpdate() {
-		std::cout << "Update Start" << std::endl;
+		std::cout << "Update Start " << title << std::endl;
 		update();
 	}
 
 	void Window::pushLayer(Layer* layer) {
 		layerStack->pushLayer(layer);
-		addChild(layer);
+		layerStack->addChild(layer);
 	}
 
 	void Window::close() {

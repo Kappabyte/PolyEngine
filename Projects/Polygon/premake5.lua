@@ -1,3 +1,5 @@
+require "vscode"
+
 -- Our first project, the static library
 project "Polygon"
 	-- kind is used to indicate the type of this project.
@@ -17,4 +19,5 @@ project "Polygon"
 	includeLibrary("GLFW")
 	includeLibrary("Glad")
 	includeProject("PolyEngine")
+	linkgroups "On"
     links {"dl", "GLFW", "Glad", "PolyEngine"}

@@ -6,4 +6,7 @@
 
 Makefile
 
+.vscode/
+*.code-workspace
+
 Build/

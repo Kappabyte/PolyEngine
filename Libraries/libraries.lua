@@ -1,6 +1,7 @@
 Libraries = { 
 	GLFW = "GLFW/include",
-	Glad = "Glad/include"
+	Glad = "Glad/include",
+	glm = "glm/glm"
 }
 
 function includeLibrary(libName) 
