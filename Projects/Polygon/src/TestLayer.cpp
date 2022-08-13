@@ -8,7 +8,7 @@ TestLayer::TestLayer(uint16_t priority, const char* name): Layer(priority), name
 }
 
 void TestLayer::update() {
-	Poly::Renderer::ClearColor(0, 0.8, 1.0, 1);
+	Poly::Renderer::ClearColor(0.0f, 0.8f, 1.0f, 1.0f);
 	Poly::Renderer::Clear();
 }
 

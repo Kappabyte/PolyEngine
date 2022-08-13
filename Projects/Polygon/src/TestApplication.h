@@ -16,7 +16,7 @@ public:
 		node.addChild(new Poly::EventNode(1));
 
 		node.logHandler();
-		
+
 		Poly::Window* window1 = createWindow("Test Window 1", 600, 300);
 		window1->open();
 

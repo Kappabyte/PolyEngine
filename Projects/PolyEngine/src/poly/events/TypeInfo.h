@@ -9,10 +9,18 @@ public:
 		return info;
 	}
 
-	bool operator< (const TypeInfo& object) const
+	bool operator==(const TypeInfo& other) const
 	{
-		return object.info != info;
+		return info == other.info;
 	}
+
+	struct HashFunction
+	{
+		size_t operator()(const TypeInfo& type) const
+		{
+			return type.info->hash_code();
+		}
+	};
 private:
 	const std::type_info* info;
 };

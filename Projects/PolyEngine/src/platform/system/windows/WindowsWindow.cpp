@@ -1,5 +1,7 @@
 #include "WindowsWindow.h"
 
+#include <iostream>
+
 #include <GLFW/glfw3.h>
 #include <poly/renderer/RenderAPI.h>
 #include <poly/renderer/Renderer.h>
@@ -11,7 +13,6 @@ namespace Poly {
 	}
 
 	void WindowsWindow::update() {
-		std::cout << "test" << std::endl;
 		windowHandle = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 		if (!windowHandle) {
 			delete this;
@@ -27,9 +28,8 @@ namespace Poly {
 
 		glfwSwapInterval(GLFW_TRUE);
 
-		while (windowOpen) {
+		do {
 			layerStack->updateLayers();
-			dispatch(&ExampleEvent("test"));
 			context->swapBuffers(windowHandle);
 			glfwPollEvents();
 
@@ -40,7 +40,7 @@ namespace Poly {
 					windowOpen = false;
 				}
 			}
-		}
+		} while (windowOpen);
 	}
 
 	void errorCallback(int error, const char* description) {

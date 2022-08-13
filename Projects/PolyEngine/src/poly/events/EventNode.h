@@ -1,6 +1,6 @@
 #pragma once
 #include "Event.h"
-#include <map>
+#include <unordered_map>
 #include <list>
 #include <algorithm>
 #include "EventHandler.h"
@@ -46,7 +46,7 @@ namespace Poly {
 			printf(logHandler(depth).c_str());
 		}
 	private:
-		typedef std::map<TypeInfo, std::vector<HandlerFunctionBase*>*> HandlerList;
+		typedef std::unordered_map<TypeInfo, std::vector<HandlerFunctionBase*>*, TypeInfo::HashFunction> HandlerList;
 		HandlerList handlers;
 
 		uint32_t priority;
