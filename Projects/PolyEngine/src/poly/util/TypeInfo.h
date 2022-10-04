@@ -4,9 +4,9 @@
 
 class TypeInfo {
 public:
-    TypeInfo(const std::type_info* info): info(info) {}
+    explicit TypeInfo(const std::type_info* info): info(info) {}
 
-    const std::type_info * get() const {
+    [[nodiscard]] const std::type_info * get() const {
         return info;
     }
 

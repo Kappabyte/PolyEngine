@@ -16,7 +16,7 @@ namespace Poly {
          * @return Whether the event is cancelled
          */
         bool isCancelled();
-    private:
+    public:
         bool cancelled = false;
     };
 

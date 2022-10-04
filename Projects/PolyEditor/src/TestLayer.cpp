@@ -3,16 +3,18 @@
 //
 
 #include "TestLayer.h"
+#include "poly/core/Application.h"
+#include "poly/core/Window.h"
+#include <poly/render/Renderer.h>
 
 void TestLayer::init() {
-    addListener<TestEvent>(this, 0);
-
-    std::cout << "Initialized Test Layer" << std::endl;
+    std::cout << "TestLayer init" << std::endl;
 }
 
 void TestLayer::update() {
-}
+    Poly::Renderer::begin(Poly::Application::get()->getWindow("poly:Test"));
 
-void TestLayer::handle(TestEvent *event) {
-    std::cout << "Event: " << event->getText() << std::endl;
+    Poly::Renderer::draw(Poly::Shared<Poly::Mesh>(), Poly::Shared<Poly::Material>());
+
+    Poly::Renderer::end();
 }

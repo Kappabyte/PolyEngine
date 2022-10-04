@@ -9,7 +9,7 @@ namespace Poly {
         /**
          * Create the event listener
          */
-        EventListener<EventType>() {
+        EventListener() {
             static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
         }
 
@@ -26,7 +26,7 @@ namespace Poly {
         /**
          * Create the event result listener
          */
-        EventResultListener<EventType>() {
+        EventResultListener() {
             static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
         }
 

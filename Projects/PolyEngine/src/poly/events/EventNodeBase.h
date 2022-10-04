@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <set>
+#include <iostream>
 
 #define EventChildren std::set<std::pair<uint32_t, IEventNode*>>
 
@@ -35,6 +36,8 @@ namespace Poly {
         /**
          * Dispatch an event to the event tree.
          *
+         * Note: The event object will be deleted after this function is called.
+         *
          * Assuming an event tree that looks like the following:
          * ----------------------------------------<br>
          * (1) EventNode<br>
@@ -60,6 +63,8 @@ namespace Poly {
 
             bool propagateResult = true;
             dispatch(TypeInfo(&typeid(*event)), event, propagateResult, this);
+
+            delete event;
         }
     protected:
         /**
@@ -105,11 +110,76 @@ namespace Poly {
          * @return the children of the event node
          */
         virtual EventChildren getEventNodeChildren() = 0;
-
-        bool dispatch(TypeInfo info, Event* event);
     private:
-        bool dispatch(TypeInfo info, Event* event, bool &propagateResult, IEventNode* root);
-        void dispatchResult(TypeInfo info, Event* event, bool& propagateResult);
+        template <class EventType>
+        bool dispatch(TypeInfo info, EventType* e, bool &propagateResult, IEventNode* root) {
+            EventType* event = e;
+            //Try to handle the event in a local handler first
+            auto it = listeners.find(info);
+            if (it != listeners.end()) {
+                //Go through each registered handler and execute it, cancelling if the event was cancelled
+                auto iter = it->second->begin();
+                while (iter != it->second->end()) {
+                    auto* listener = (EventListener<Event>*)(iter->second);
+                    listener->handle(event);
+                    if(event->isCancelled()) {
+                        if(propagateResult) {
+                            root->dispatchResult(info, event, propagateResult);
+                            propagateResult = false;
+                        }
+                        return true;
+                    }
+                    iter++;
+                }
+            }
+
+            auto children = getEventNodeChildren();
+
+            auto iterator = children.begin();
+            while(iterator != children.end()) {
+                iterator->second->dispatch(info, event, propagateResult, root);
+                if(event->isCancelled()) {
+                    if(propagateResult) {
+                        root->dispatchResult(info, event, propagateResult);
+                        propagateResult = false;
+                    }
+                    return true;
+                }
+                iterator++;
+            }
+
+            if(propagateResult) {
+                root->dispatchResult(info, event, propagateResult);
+                propagateResult = false;
+            }
+            return true;
+        }
+
+        template <class EventType>
+        void dispatchResult(TypeInfo info, EventType* e, bool& propagateResult) {
+            EventType* event = e;
+            //Try to handle the event in a local handler first
+            auto it = resultListeners.find(info);
+            if (it != resultListeners.end()) {
+                //Go through each registered handler and execute it, cancelling if the event was cancelled
+                auto iter = it->second->begin();
+                while (iter != it->second->end()) {
+                    auto* listener =(EventResultListener<Event>*)(iter->second);
+                    listener->handleResult(event, propagateResult);
+                    if(!propagateResult) return;
+                    iter++;
+                }
+            }
+
+            auto children = getEventNodeChildren();
+
+            auto iterator = children.begin();
+            while(iterator != children.end()) {
+                iterator->second->dispatchResult(info, event, propagateResult);
+                if(!propagateResult) return;
+                iterator++;
+            }
+        }
 
     private:
         std::unordered_map<TypeInfo, std::multiset<std::pair<uint16_t, BaseListener*>>*, TypeInfo::HashFunction> listeners = {};
