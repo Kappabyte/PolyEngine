@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "poly/render/material/Material.h"
-#include "poly/render/geometry/Mesh.h"
+#include "poly/render/geometry/material/Material.h"
+#include "poly/render/geometry/mesh/Mesh.h"
 #include "poly/util/Ref.h"
 #include "RenderTarget.h"
 

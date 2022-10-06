@@ -26,6 +26,7 @@ namespace Poly::GL {
         ~GLVertexBuffer() override;
 
         void setLayout(std::vector<BufferElement> elements) override;
+        void setLayout(BufferLayout layout) override;
 
         void bind() override;
         void unbind() override;

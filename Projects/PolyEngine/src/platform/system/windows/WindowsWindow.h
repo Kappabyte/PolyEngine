@@ -20,6 +20,6 @@ namespace Poly::Windows {
         void shutdown() override;
     private:
         GLFWwindow* window = nullptr;
-        GL::GLShader* shader;
+        Shared<Shader> shader;
     };
 }

@@ -37,6 +37,7 @@ namespace Poly {
         }
 
         while(state == ApplicationState::RUNNING) {
+            sync_point.arrive_and_wait();
             queueMutex.lock();
             auto qit = eventQueues.begin();
             while(qit != eventQueues.end()) {
@@ -55,9 +56,6 @@ namespace Poly {
             if(windows.empty()) {
                 state = ApplicationState::STOPPED;
             }
-            std::cout << "MAIN: Arrived" << std::endl;
-            sync_point.arrive_and_wait();
-            std::cout << "MAIN: Proceeding" << std::endl;
         }
     }
 

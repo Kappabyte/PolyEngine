@@ -9,6 +9,7 @@
 #include "poly/render/Buffer.h"
 #include "poly/render/RenderCommand.h"
 #include "glm/vec4.hpp"
+#include "poly/render/geometry/Geometry.h"
 
 void error_callback(int error, const char* description)
 {
@@ -39,15 +40,22 @@ namespace Poly::Windows {
 
         glfwSwapInterval(1);
 
-        shader = new GL::GLShader("res/shaders/vertex.glsl", "res/shaders/fragment.glsl");
+        shader = Shader::create("res/shaders/vertex.glsl", "res/shaders/fragment.glsl");
     }
 
     void WindowsWindow::update() {
+        if(getState() == WindowState::INITIALIZED)
+            Application::get()->sync_point.arrive_and_wait();
         GLenum err;
         while((err = glGetError()) != GL_NO_ERROR)
         {
             std::cout << "OpenGL error: " << err << std::endl;
         }
+
+        unsigned int indices[] = {
+                0, 1, 2,
+                1,2,3
+        };
 
         glfwSwapBuffers(window);
         while(!getRenderQueueEmpty()) {
@@ -66,6 +74,17 @@ namespace Poly::Windows {
                     }
                     break;
                 case RenderCommandType::DRAW_INDEXED:
+                    {
+                        auto data = (GeometryData*) command.data;
+                        data->material = MakeShared<Material>(shader);
+                        Geometry geometry = Geometry(*data);
+                        geometry.getVertexArray()->bind();
+                        Shared<IndexBuffer> ibo = IndexBuffer::create();
+                        ibo->bind();
+                        ibo->data(indices, sizeof(indices));
+                        RenderCommandExecutor::drawIndexed();
+                        delete data;
+                    }
                     break;
             }
         }
@@ -75,46 +94,37 @@ namespace Poly::Windows {
             Application::get()->getEventQueue<WindowCloseEvent>()->addToQueue(new WindowCloseEvent(identifier));
             glfwSetWindowShouldClose(window, GLFW_FALSE);
         }
-        float vertices[] = {
-                -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-                0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-                -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-                0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f
-        };
-        unsigned int indices[] = {
-                0, 1, 2,
-                1, 2, 3
-        };
-
-        shader->bind();
-        Shared<VertexBufferArray> vao = VertexBufferArray::create();
-        vao->bind();
-
-        Shared<VertexBuffer> vbo = VertexBuffer::create();
-        vbo->bind();
-        vbo->data(vertices, sizeof(vertices));
-
-        Shared<IndexBuffer> ibo = IndexBuffer::create();
-        ibo->bind();
-        ibo->data(indices, sizeof(indices));
-
-        vbo->setLayout({
-            {shader->getAttributeLocation("aPos"), ShaderType::FLOAT3, "aPos"},
-            {shader->getAttributeLocation("aColor"), ShaderType::FLOAT3, "aColor"}
-        });
-
-        RenderCommandExecutor::drawIndexed();
-
-        vao->unbind();
-
-        shader->unbind();
-        std::cout << identifier.toString() << ": Arrived" << std::endl;
-        Application::get()->sync_point.arrive_and_wait();
-        std::cout << identifier.toString() << ": Proceeding" << std::endl;
+//        float vertices[] = {
+//                -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+//                0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+//                -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+//                0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f
+//        };
+//
+//
+//        shader->bind();
+//        Shared<VertexBufferArray> vao = VertexBufferArray::create();
+//        vao->bind();
+//
+//        Shared<VertexBuffer> vbo = VertexBuffer::create();
+//        vbo->bind();
+//        vbo->data(vertices, sizeof(vertices));
+//
+//
+//
+//        vbo->setLayout({
+//            {shader->getAttributeLocation("aPos"), ShaderType::FLOAT3, "aPos"},
+//            {shader->getAttributeLocation("aColor"), ShaderType::FLOAT3, "aColor"}
+//        });
+//
+//        RenderCommandExecutor::drawIndexed();
+//
+//        vao->unbind();
+//
+//        shader->unbind();
     }
 
     void WindowsWindow::shutdown() {
-        delete shader;
         glfwDestroyWindow(window);
     }
 }

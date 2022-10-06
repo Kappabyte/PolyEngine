@@ -6,6 +6,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "poly/util/Ref.h"
 
 namespace Poly {
 
@@ -17,7 +18,7 @@ namespace Poly {
          * @param fragmentPath The path to the fragment shader
          * @return The created Shader.
          */
-        static Shader* create(const std::string& vertexPath, const std::string& fragmentPath);
+        static Shared<Shader> create(const std::string& vertexPath, const std::string& fragmentPath);
         virtual ~Shader() = default;
 
         /**
@@ -32,13 +33,13 @@ namespace Poly {
         /**
          * Get the location of the specified attribute
          * @param name The name of the attribute
-         * @return The location of the attribute
+         * @return The location of the attribute, or -1 if it doesn't exist.
          */
         virtual int32_t getAttributeLocation(const std::string& name) = 0;
         /**
          * Get the location of the specified uniform
          * @param name The name of the uniform
-         * @return The location of the uniform
+         * @return The location of the uniform, or -1 if it doesn't exist.
          */
         virtual int32_t getUniformLocation(const std::string& name) = 0;
     protected:

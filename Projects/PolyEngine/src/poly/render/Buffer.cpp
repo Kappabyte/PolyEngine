@@ -35,6 +35,15 @@ namespace Poly {
         }
     }
 
+    void BufferLayout::addElement(int32_t location, ShaderType type, std::string name) {
+        elements.emplace_back(location, type, std::move(name));
+        stride = 0;
+        for(auto& element : this->elements) {
+            element.offset = stride;
+            stride += getShaderTypeSize(element.type);
+        }
+    }
+
     BufferElement::BufferElement(int32_t location, ShaderType type, std::string name): location(location), type(type), name(std::move(name)) {}
 
     Shared<IndexBuffer> IndexBuffer::create() {

@@ -50,6 +50,9 @@ namespace Poly {
          */
         std::vector<BufferElement> elements;
         explicit BufferLayout(std::vector<BufferElement> elements);
+        explicit BufferLayout(): BufferLayout(std::vector<BufferElement>()) {};
+
+        void addElement(int32_t location, ShaderType type, std::string name);
     };
 
     class VertexBufferArray {
@@ -87,6 +90,7 @@ namespace Poly {
          * @param bufferLayout
          */
         virtual void setLayout(std::vector<BufferElement> bufferLayout) = 0;
+        virtual void setLayout(BufferLayout layout) = 0;
 
         /**
          * Bind the buffer

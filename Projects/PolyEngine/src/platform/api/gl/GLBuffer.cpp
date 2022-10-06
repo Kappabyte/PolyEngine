@@ -70,6 +70,13 @@ namespace Poly::GL {
         }
     }
 
+    void GLVertexBuffer::setLayout(BufferLayout layout) {
+        for(auto& element : layout.elements) {
+            glEnableVertexAttribArray(element.location);
+            glVertexAttribPointer(element.location, getShaderTypeCount(element.type), ShaderTypeToGLType(element.type), GL_FALSE, layout.stride, (void*)element.offset);
+        }
+    }
+
     GLIndexBuffer::GLIndexBuffer() {
         glGenBuffers(1, &bufferID);
     }
