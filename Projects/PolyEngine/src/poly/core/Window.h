@@ -8,39 +8,30 @@
 #include "poly/layers/LayerStack.h"
 
 namespace Poly {
-	class Window : public EventNode {
+	class Window {
 	public:
 		Window(uint32_t width, uint32_t height, std::string name = "Poly Engine Window");
 		~Window();
 
 		void open();
+		void update();
 		void close();
 
-		void pushLayer(Layer* layer);
-
-		virtual void update() = 0;
-		void onExampleEvent(ExampleEvent* e);
+		bool inline isOpen() {
+			return windowOpen;
+		}
 	protected:
-		virtual void onInit() = 0;
-	private:
-		using EventNode::addChild;
-		using EventNode::getPriority;
-		using EventNode::getChildren;
-
-		virtual void internalUpdate();
+		virtual void onOpen() = 0;
+		virtual void onUpdate() = 0;
+		virtual void onClose() = 0;
 
 	protected:
 		std::string title;
 		int width;
 		int height;
 
-		std::list<Layer*> layers;
-
 		bool windowOpen = true;
 
-		std::thread updateThread;
-
 		void* windowHandle = nullptr;
-		LayerStack* layerStack = new LayerStack();
 	};
 }

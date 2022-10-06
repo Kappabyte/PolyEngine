@@ -14,10 +14,10 @@ namespace Poly {
 
 		~WindowsWindow();
 
-		void update() override;
+		void onOpen() override;
+		void onUpdate() override;
+		void onClose() override;
 	private:
-		void onInit() override;
-
 		RendererContext* context = nullptr;
 	};
 }

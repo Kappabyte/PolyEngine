@@ -2,6 +2,8 @@
 
 #include "TestApplication.h"
 
-Poly::Application* Poly::CreateApplication() {
-	return new TestApplication;
+int main() {
+	Poly::Application* application = new TestApplication();
+
+	application->start();
 }

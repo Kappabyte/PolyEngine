@@ -5,13 +5,19 @@
 #include <platform/system/windows/WindowsWindow.h>
 
 namespace Poly {
-	Application::Application() {
+	Application::Application(std::string title, uint32_t width, uint32_t height) {
+		window = createWindow(title, width, height);
 		glfwInit();
 	}
 
 	void Application::start() {
-		while (true) {
-
+		//Open the window
+		window->open();
+		
+		//Update the window
+		while (window->isOpen()) {
+			window->update();
+			layerStack->updateLayers();
 		}
 	}
 
@@ -21,7 +27,6 @@ namespace Poly {
 
 	Window* Application::createWindow(std::string title, uint32_t width, uint32_t height) {
 		Window* window;
-
 		#ifdef POLY_PLATFORM_WINDOWS
 		std::cout << "Platform: Windows" << std::endl;
 			window = new WindowsWindow(width, height, title);
@@ -29,8 +34,11 @@ namespace Poly {
 		#else
 		std::cout << "Platform: Unknown" << std::endl;
 		#endif
-
-		windows.push_back(window);
 		return window;
+	}
+
+	void Application::pushLayer(Layer* layer) {
+		layerStack->pushLayer(layer);
+		addChild(layer);
 	}
 }

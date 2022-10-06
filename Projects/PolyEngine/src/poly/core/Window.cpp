@@ -9,31 +9,21 @@ namespace Poly {
 		std::cout << "Created Window" << std::endl;
 	}
 
-	void Window::open() {
-		updateThread = std::thread(&Window::internalUpdate, this);
-	}
-
 	Window::~Window() {
 
 	}
 
-	void Window::internalUpdate() {
-		std::cout << "Update Start" << std::endl;
-		update();
+	void Window::open() {
+		onOpen();
 	}
 
-	void Window::pushLayer(Layer* layer) {
-		layerStack->pushLayer(layer);
-		addChild(layer);
+	void Window::update() {
+		onUpdate();
 	}
 
 	void Window::close() {
+		onClose();
 		windowOpen = false;
-		updateThread.join();
-		delete this;
-	}
-
-	void Window::onExampleEvent(ExampleEvent* e) {
-		std::cout << e->getText() << std::endl;
+		std::cout << "Window Closed" << std::endl;
 	}
 }
