@@ -21,17 +21,17 @@ namespace Poly::Windows {
     WindowsWindow::~WindowsWindow() {
     }
     void WindowsWindow::init() {
-        std::cout << "Creating window: " << props.title << std::endl;
+        std::cout << "Creating window: " << m_props.title << std::endl;
         if(!glfwInit()) {
             throw std::runtime_error("Failed to initialize GLFW");
         }
         glfwSetErrorCallback(error_callback);
-        window = glfwCreateWindow(props.width, props.height, props.title.c_str(), nullptr, nullptr);
+        window = glfwCreateWindow(m_props.width, m_props.height, m_props.title.c_str(), nullptr, nullptr);
         if(!window) {
             glfwTerminate();
             throw std::runtime_error("Failed to create GLFW window");
         }
-        std::cout << "Created window: " << props.title << std::endl;
+        std::cout << "Created window: " << m_props.title << std::endl;
 
         glfwMakeContextCurrent(window);
         gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
@@ -44,13 +44,7 @@ namespace Poly::Windows {
     }
 
     void WindowsWindow::update() {
-        if(getState() == WindowState::INITIALIZED)
-            Application::get()->sync_point.arrive_and_wait();
-        GLenum err;
-        while((err = glGetError()) != GL_NO_ERROR)
-        {
-            std::cout << "OpenGL error: " << err << std::endl;
-        }
+        setState(WindowState::UPDATING);
 
         unsigned int indices[] = {
                 0, 1, 2,
@@ -91,37 +85,21 @@ namespace Poly::Windows {
         glfwPollEvents();
 
         if(glfwWindowShouldClose(window) == GLFW_TRUE) {
+            //TODO: Window should not be accessing the application
             Application::get()->getEventQueue<WindowCloseEvent>()->addToQueue(new WindowCloseEvent(identifier));
             glfwSetWindowShouldClose(window, GLFW_FALSE);
         }
-//        float vertices[] = {
-//                -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-//                0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-//                -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
-//                0.5f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f
-//        };
-//
-//
-//        shader->bind();
-//        Shared<VertexBufferArray> vao = VertexBufferArray::create();
-//        vao->bind();
-//
-//        Shared<VertexBuffer> vbo = VertexBuffer::create();
-//        vbo->bind();
-//        vbo->data(vertices, sizeof(vertices));
-//
-//
-//
-//        vbo->setLayout({
-//            {shader->getAttributeLocation("aPos"), ShaderType::FLOAT3, "aPos"},
-//            {shader->getAttributeLocation("aColor"), ShaderType::FLOAT3, "aColor"}
-//        });
-//
-//        RenderCommandExecutor::drawIndexed();
-//
-//        vao->unbind();
-//
-//        shader->unbind();
+
+        if(getState() == WindowState::UPDATING) {
+            setState(WindowState::IDLE);
+        }
+
+        // Wait for the next update
+        while(getState() == WindowState::IDLE) {
+            if(m_shouldClose) {
+                return;
+            }
+        }
     }
 
     void WindowsWindow::shutdown() {

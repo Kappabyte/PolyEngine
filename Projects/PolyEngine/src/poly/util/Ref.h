@@ -11,7 +11,7 @@ namespace Poly {
     template<typename T, typename ... Args>
     constexpr Unique<T> MakeUnique(Args&& ... args)
     {
-        return std::make_unique<T>(std::forward<Args>(args)...);
+        return std::make_unique<T>(args...);
     }
 
     template<typename T>
@@ -19,6 +19,6 @@ namespace Poly {
     template<typename T, typename ... Args>
     constexpr Shared<T> MakeShared(Args&& ... args)
     {
-        return std::make_shared<T>(std::forward<Args>(args)...);
+        return std::make_shared<T>(args...);
     }
 }

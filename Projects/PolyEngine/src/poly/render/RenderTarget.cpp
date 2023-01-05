@@ -12,9 +12,7 @@ void Poly::RenderTarget::submit(const Poly::RenderCommand& command) {
 }
 
 void Poly::RenderTarget::flush() {
-    std::cout << "Flushing...." << std::endl;
     queueMutex.lock();
-    std::cout << "Flushing...." << std::endl;
     commandQueue = std::queue<RenderCommand>();
     queueMutex.unlock();
 }

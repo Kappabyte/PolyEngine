@@ -8,6 +8,7 @@
 #include "poly/render/geometry/material/Material.h"
 #include "poly/render/geometry/mesh/Mesh.h"
 #include "RenderCommand.h"
+#include <mutex>
 
 namespace Poly {
     class RenderTarget {

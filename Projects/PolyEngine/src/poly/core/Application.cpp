@@ -37,14 +37,24 @@ namespace Poly {
         }
 
         while(state == ApplicationState::RUNNING) {
-            sync_point.arrive_and_wait();
-            queueMutex.lock();
+            mutex.lock();
             auto qit = eventQueues.begin();
             while(qit != eventQueues.end()) {
                 qit->second->dispatchEvents(this);
                 qit++;
             }
-            queueMutex.unlock();
+            mutex.unlock();
+
+            for(auto window = std::begin(windows); window != std::end(windows);) {
+                if(window->second->getState() == WindowState::CLOSED) {
+                    window = windows.erase(window);
+                    continue;
+                }
+                if(window->second->getState() == WindowState::IDLE) {
+                    window->second->setState(WindowState::UPDATING);
+                }
+                window++;
+            }
 
             children = getLayers();
             it = children.begin();
@@ -53,10 +63,21 @@ namespace Poly {
                 it++;
             }
 
+            mutex.lock();
+            if(windows.empty()) {
+                state = ApplicationState::STOPPED;
+            }
+            mutex.unlock();
+
+            // Wait for all windows to be done updating
+            for(auto& window : windows) {
+                while(window.second->getState() != WindowState::IDLE && window.second->getState() != WindowState::CLOSED) {}
+            }
             if(windows.empty()) {
                 state = ApplicationState::STOPPED;
             }
         }
+        std::cout << "Application stopped" << std::endl;
     }
 
     EventChildren Application::getEventNodeChildren() {
@@ -75,9 +96,11 @@ namespace Poly {
     }
 
     Window* Application::addWindow(const NamespaceID& identifier, WindowProps props) {
+        mutex.lock();
         Window* window = Window::create(identifier, std::move(props));
         windows.insert({identifier, window});
         if(state == ApplicationState::RUNNING) window->start();
+        mutex.unlock();
         return window;
     }
 
@@ -97,19 +120,15 @@ namespace Poly {
         }
 
         handled = true;
-        getWindow(event->identifier)->close();
+        removeWindow(event->identifier);
     }
 
-    void Application::removeWindow(const NamespaceID id) {
+    void Application::removeWindow(const NamespaceID& id) {
         if(windows.find(id) == windows.end()) {
             throw std::runtime_error("Window does not exist");
         }
 
-        if(windows[id]->getState() == WindowState::INITIALIZED) {
-            windows[id]->close();
-        }
-        delete windows[id];
-        windows.erase(id);
+        windows[id]->setShouldClose(true);
     }
 
     void Application::setAPI(API api) {

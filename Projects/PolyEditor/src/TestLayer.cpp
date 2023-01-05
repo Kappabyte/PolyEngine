@@ -20,8 +20,8 @@ void TestLayer::init() {
     };
     mesh->addVertexAttribute("a_Pos", Poly::ShaderType::FLOAT3, a_Pos, sizeof(a_Pos));
     float a_Color[] = {
-        1.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 1.0f,
+        0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
         1.0f, 0.0f, 1.0f,
         0.0f, 1.0f, 0.0f,
     };

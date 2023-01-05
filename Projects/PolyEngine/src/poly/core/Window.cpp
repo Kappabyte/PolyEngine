@@ -14,40 +14,48 @@ namespace Poly {
         #if defined(Poly_Platform_Windows)
             return new Windows::WindowsWindow(identifier, props);
         #elif defined(Poly_Platform_Linux)
-            return new LinuxWindow(props);
+            return new LinuxWindow(m_props);
         #elif defined(Poly_Platform_MacOS)
-            return new MacOSWindow(props);
+            return new MacOSWindow(m_props);
         #else
             throw std::runtime_error("Unsupported platform");
         #endif
     }
 
-    Window::Window(NamespaceID identifier, Poly::WindowProps& props): identifier(identifier), props(props) {}
+    Window::Window(NamespaceID identifier, Poly::WindowProps& props): identifier(identifier), m_props(props) {}
 
     void Window::start() {
-        thread = std::thread(&Window::i_start, this);
-
-        // Wait for the window to initialize
-        while(state != WindowState::INITIALIZED) {}
-    }
-
-    void Window::close() {
-        state = WindowState::CLOSED;
-        thread.join();
-        Application::get()->removeWindow(identifier);
+        m_thread = std::thread(&Window::i_start, this);
     }
 
     void Window::i_start() {
         init();
-        state = WindowState::INITIALIZED;
-        while(state == WindowState::INITIALIZED) {
+        m_state = WindowState::INITIALIZING;
+
+        while(true) {
             update();
+            if(m_shouldClose) {
+                break;
+            }
         }
         shutdown();
         std::cout << "Window " << identifier.toString() << " closed" << std::endl;
+        setState(WindowState::CLOSED);
     }
 
     WindowState Window::getState() {
-        return state;
+        return m_state;
+    }
+
+    void Window::setState(WindowState state) {
+        m_stateMutex.lock();
+        this->m_state = state;
+        m_stateMutex.unlock();
+    }
+
+    void Window::setShouldClose(bool shouldClose) {
+        m_stateMutex.lock();
+        this->m_shouldClose = shouldClose;
+        m_stateMutex.unlock();
     }
 } // Poly

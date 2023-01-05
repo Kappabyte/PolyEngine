@@ -68,28 +68,31 @@ namespace Poly {
          */
         template <class EventType>
         EventQueue<EventType>* getEventQueue() {
-            queueMutex.lock();
+            mutex.lock();
             if(eventQueues.find(TypeInfo(&typeid(EventType))) == eventQueues.end()) {
                 EventQueueBase* queue = new EventQueue<EventType>();
                 eventQueues.insert({TypeInfo(&typeid(EventType)), queue});
             }
             EventQueue<EventType>* queue = (EventQueue<EventType>*)eventQueues[TypeInfo(&typeid(EventType))];
-            queueMutex.unlock();
+            mutex.unlock();
             return queue;
         }
+
         /**
          * Remove a window from the application.
          * @param id The window identifier.
          */
-        void removeWindow(NamespaceID id);
+        void removeWindow(const NamespaceID& id);
 
     protected:
         EventChildren getEventNodeChildren() override;
     private:
         Application();
         void handleResult(WindowCloseEvent* event, bool& handled) override;
-    public:
-        std::barrier<std::__empty_completion> sync_point = std::barrier(2);
+
+        struct empty_completion {
+            inline void operator()() noexcept { }
+        };
     private:
         static Application* instance;
 
@@ -99,6 +102,6 @@ namespace Poly {
         std::unordered_map<TypeInfo, EventQueueBase*, TypeInfo::HashFunction> eventQueues = {};
         std::unordered_map<NamespaceID, Window*> windows = {};
 
-        std::mutex queueMutex = std::mutex();
+        std::mutex mutex = std::mutex();
     };
 }

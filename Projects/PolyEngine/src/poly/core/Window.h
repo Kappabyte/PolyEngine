@@ -14,15 +14,19 @@ namespace Poly {
 
     struct WindowProps {
         std::string title = "PolyEngine";
+
         bool fullscreen = false;
         bool vsync = false;
+
         uint16_t width = 800;
         uint16_t height = 600;
     };
 
     enum class WindowState {
-        CLOSED,
-        INITIALIZED
+        INITIALIZING,
+        UPDATING,
+        IDLE,
+        CLOSED
     };
 
     class Window : public RenderTarget {
@@ -40,16 +44,19 @@ namespace Poly {
          * Open the window and start rendering everything in the render queue.
          */
         void start();
+
         /**
          * Close the window.
          */
-        void close();
+        void setShouldClose(bool shouldClose);
 
         /**
          * Get the state of the window
          * @return The window state
          */
         WindowState getState();
+
+        void setState(WindowState state);
 
     protected:
         Window(NamespaceID identifier, WindowProps& props);
@@ -59,14 +66,15 @@ namespace Poly {
         virtual void shutdown() = 0;
     private:
         void i_start();
-    public:
-        const NamespaceID identifier;
     protected:
-        WindowProps props;
+        WindowProps m_props;
+        const NamespaceID identifier;
+        bool m_shouldClose = false;
     private:
-        std::thread thread;
+        std::thread m_thread;
 
-        WindowState state = WindowState::CLOSED;
+        std::mutex m_stateMutex = std::mutex();
+        WindowState m_state = WindowState::INITIALIZING;
     };
 
 } // Poly
