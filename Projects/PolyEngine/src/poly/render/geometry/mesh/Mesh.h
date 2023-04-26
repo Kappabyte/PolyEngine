@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-22.
-//
-
 #pragma once
 
 #include <vector>
@@ -14,9 +10,9 @@ namespace Poly {
     class Mesh {
     public:
         struct VertexAttribute {
-            ShaderType type;
-            size_t size;
-            float* data;
+            ShaderType m_type;
+            size_t m_size;
+            float* m_data;
 
             VertexAttribute(ShaderType type, float* data, size_t size);
         };
@@ -24,10 +20,10 @@ namespace Poly {
         Mesh() = default;
         void addVertexAttribute(const std::string& name, ShaderType type, float data[], size_t size);
 
-        [[nodiscard]] const std::unordered_map<std::string, VertexAttribute>& getVertexAttributes() const { return vertexAttributes; }
-        [[nodiscard]] const std::vector<float>& getCompiledVertexData() const { return compiledVertexData; }
+        [[nodiscard]] const std::unordered_map<std::string, VertexAttribute>& getVertexAttributes() const { return m_vertexAttributes; }
+        [[nodiscard]] const std::vector<float>& getCompiledVertexData() const { return m_compiledVertexData; }
     private:
-        std::unordered_map<std::string, VertexAttribute> vertexAttributes;
-        std::vector<float> compiledVertexData;
+        std::unordered_map<std::string, VertexAttribute> m_vertexAttributes;
+        std::vector<float> m_compiledVertexData;
     };
 }

@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-28.
-//
-
 #pragma once
 
 
@@ -20,19 +16,19 @@ namespace Poly {
         /**
          * The shader data type
          */
-        ShaderType type;
+        ShaderType m_type;
         /**
          * The location of the element in the shader
          */
-        int32_t location;
+        int32_t m_location;
         /**
          * The name of the element
          */
-        std::string name;
+        std::string m_name;
         /**
          * The offset of this element (in bytes) in each vertex.
          */
-        uint64_t offset = 0;
+        uint64_t m_offset = 0;
 
         BufferElement(int32_t location, ShaderType type, std::string name);
     };
@@ -44,11 +40,11 @@ namespace Poly {
         /**
          * The number of bytes between vertices in the buffer.
          */
-        uint16_t stride = 0;
+        uint16_t m_stride = 0;
         /**
          * The buffer elements in the layout.
          */
-        std::vector<BufferElement> elements;
+        std::vector<BufferElement> m_elements;
         explicit BufferLayout(std::vector<BufferElement> elements);
         explicit BufferLayout(): BufferLayout(std::vector<BufferElement>()) {};
 
@@ -105,9 +101,9 @@ namespace Poly {
         /**
          * Set the buffer data
          * @param data The buffer data
-         * @param data_length The length of the buffer data
+         * @param dataLength The length of the buffer data
          */
-        virtual void data(void* data, uint32_t data_length) = 0;
+        virtual void data(void* data, uint32_t dataLength) = 0;
     protected:
         virtual ~VertexBuffer() = default;
     };
@@ -131,9 +127,9 @@ namespace Poly {
         /**
          * Set the buffer data
          * @param data The buffer data
-         * @param data_length The length of the buffer data
+         * @param dataLength The length of the buffer data
          */
-        virtual void data(void* data, uint32_t data_length) = 0;
+        virtual void data(void* data, uint32_t dataLength) = 0;
     protected:
         IndexBuffer() = default;
     };

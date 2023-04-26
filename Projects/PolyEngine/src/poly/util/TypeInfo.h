@@ -2,26 +2,28 @@
 #include <typeinfo>
 #include <cstdio>
 
+#define Type(x) TypeInfo(&typeid(x))
+
 class TypeInfo {
 public:
-    explicit TypeInfo(const std::type_info* info): info(info) {}
+    explicit TypeInfo(const std::type_info* info): m_info(info) {}
 
     [[nodiscard]] const std::type_info * get() const {
-        return info;
+        return m_info;
     }
 
     bool operator==(const TypeInfo& other) const
     {
-        return info->hash_code() == other.info->hash_code();
+        return m_info->hash_code() == other.m_info->hash_code();
     }
 
     struct HashFunction
     {
         size_t operator()(const TypeInfo& type) const
         {
-            return type.info->hash_code();
+            return type.m_info->hash_code();
         }
     };
 private:
-    const std::type_info* info;
+    const std::type_info* m_info;
 };

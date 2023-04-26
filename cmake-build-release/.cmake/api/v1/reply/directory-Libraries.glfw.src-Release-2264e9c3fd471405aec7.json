@@ -1,0 +1,45 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"install"
+		],
+		"files" : 
+		[
+			"Libraries/glfw/src/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 394,
+				"parent" : 0
+			}
+		]
+	},
+	"installers" : 
+	[
+		{
+			"backtrace" : 1,
+			"component" : "Unspecified",
+			"destination" : "lib",
+			"paths" : 
+			[
+				"C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glfw/src/glfw3.lib"
+			],
+			"targetId" : "glfw::@a20de203f1e4f2c49f79",
+			"targetIndex" : 3,
+			"type" : "target"
+		}
+	],
+	"paths" : 
+	{
+		"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glfw/src",
+		"source" : "Libraries/glfw/src"
+	}
+}

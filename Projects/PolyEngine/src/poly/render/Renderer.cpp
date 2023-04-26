@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-28.
-//
-
 #include "Renderer.h"
 
 #include <utility>
@@ -9,28 +5,20 @@
 #include "poly/render/geometry/Geometry.h"
 
 namespace Poly {
-    RenderTarget* Renderer::target = nullptr;
+    RenderTarget* Renderer::m_target = nullptr;
 
     void Renderer::begin(RenderTarget* pTarget) {
-        if(pTarget == nullptr || target != nullptr) return;
-        target = pTarget;
-        target->flush();
-    }
-
-    void Renderer::draw(Shared<Mesh> mesh, Shared<Material> material) {
-        if(target == nullptr) return;
-        target->submit(RenderCommand(RenderCommandType::SET_CLEAR_COLOUR, new glm::vec4(0.0f, 0.0f, 0.0f, 1.0f)));
-        target->submit(RenderCommand(RenderCommandType::CLEAR, nullptr));
-        target->submit(RenderCommand(RenderCommandType::DRAW_INDEXED, new GeometryData{std::move(mesh), std::move(material)}));
-    }
-
-    void Renderer::command(RenderCommandType type, void *data) {
-        if(target == nullptr) return;
-        target->submit(RenderCommand(type, data));
+        if(pTarget == nullptr || m_target != nullptr) return;
+        m_target = pTarget;
+        m_target->flush();
     }
 
     void Renderer::end() {
-        if(target == nullptr) return;
+        m_target = nullptr;
     }
-
+    
+    void Renderer::setClearColour(float r, float g, float b) {
+        m_target->submit(makeUnique(SetClearColourRenderCommand(r, g, b)));
+    }
+    
 } // Poly

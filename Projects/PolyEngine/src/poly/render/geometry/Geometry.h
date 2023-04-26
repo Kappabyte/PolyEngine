@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-10-05.
-//
-
 #pragma once
 
 #include "poly/render/geometry/mesh/Mesh.h"
@@ -11,15 +7,15 @@
 namespace Poly {
 
     struct GeometryData {
-        Shared<Mesh> mesh;
-        Shared<Material> material;
+        Shared<Mesh> m_mesh;
+        Shared<Material> m_material;
     };
 
     class Geometry {
     public:
         explicit Geometry(GeometryData data);
 
-        [[nodiscard]] GeometryData getGeometry() const {return data;};
+        [[nodiscard]] GeometryData getGeometry() const {return m_data;};
 
         [[nodiscard]] Shared<VertexBufferArray> getVertexArray() const;
 
@@ -27,11 +23,11 @@ namespace Poly {
     private:
         void updateBuffers();
     private:
-        GeometryData data;
+        GeometryData m_data;
 
-        Shared<VertexBufferArray> vertexArray;
-        Shared<VertexBuffer> vertexBuffer;
-        Shared<IndexBuffer> indexBuffer;
+        Shared<VertexBufferArray> m_vertexArray;
+        Shared<VertexBuffer> m_vertexBuffer;
+        Shared<IndexBuffer> m_indexBuffer;
     };
 
 } // Poly

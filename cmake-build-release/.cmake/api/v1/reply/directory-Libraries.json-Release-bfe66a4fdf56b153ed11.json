@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/json",
+		"source" : "Libraries/json"
+	}
+}

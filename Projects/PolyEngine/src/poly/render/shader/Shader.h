@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-24.
-//
-
 #pragma once
 
 #include <string>
@@ -43,7 +39,7 @@ namespace Poly {
          */
         virtual int32_t getUniformLocation(const std::string& name) = 0;
     protected:
-        std::unordered_map<std::string, void*> uniformLocationCache = {};
+        std::unordered_map<std::string, void*> m_uniformLocationCache = {};
     };
 
 } // Poly

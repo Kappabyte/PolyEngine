@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include <set>
 #include <iostream>
+#include <poly/util/Log.h>
 
 #define EventChildren std::set<std::pair<uint32_t, IEventNode*>>
 
@@ -59,7 +60,7 @@ namespace Poly {
          */
         template <class EventType>
         inline void dispatch(EventType* event) {
-            static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
+            ASSERT((std::is_base_of<Event, EventType>::value), "EventType not derived from Event");
 
             bool propagateResult = true;
             dispatch(TypeInfo(&typeid(*event)), event, propagateResult, this);
@@ -78,11 +79,11 @@ namespace Poly {
         inline void addListener(EventListener<EventType>* listener, uint16_t priority) {
             static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
 
-            if (listeners.find(TypeInfo(&typeid(EventType))) == listeners.end()) {
-                listeners.insert({TypeInfo(&typeid(EventType)), new std::multiset<std::pair<uint16_t, BaseListener*>>});
+            if (m_listeners.find(TypeInfo(&typeid(EventType))) == m_listeners.end()) {
+                m_listeners.insert({TypeInfo(&typeid(EventType)), new std::multiset<std::pair<uint16_t, BaseListener*>>});
             }
 
-            std::multiset<std::pair<uint16_t, BaseListener*>>* eventHandlers = listeners.find(TypeInfo(&typeid(EventType)))->second;
+            std::multiset<std::pair<uint16_t, BaseListener*>>* eventHandlers = m_listeners.find(TypeInfo(&typeid(EventType)))->second;
             eventHandlers->insert({priority, listener});
         }
 
@@ -97,11 +98,11 @@ namespace Poly {
         inline void addResultListener(EventResultListener<EventType>* listener, uint16_t priority) {
             static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
 
-            if (resultListeners.find(TypeInfo(&typeid(EventType))) == resultListeners.end()) {
-                resultListeners.insert({TypeInfo(&typeid(EventType)), new std::multiset<std::pair<uint16_t, BaseListener*>>});
+            if (m_resultListeners.find(TypeInfo(&typeid(EventType))) == m_resultListeners.end()) {
+                m_resultListeners.insert({TypeInfo(&typeid(EventType)), new std::multiset<std::pair<uint16_t, BaseListener*>>});
             }
 
-            std::multiset<std::pair<uint16_t, BaseListener*>>* eventHandlers = resultListeners.find(TypeInfo(&typeid(EventType)))->second;
+            std::multiset<std::pair<uint16_t, BaseListener*>>* eventHandlers = m_resultListeners.find(TypeInfo(&typeid(EventType)))->second;
             eventHandlers->insert({priority, listener});
         }
 
@@ -115,8 +116,8 @@ namespace Poly {
         bool dispatch(TypeInfo info, EventType* e, bool &propagateResult, IEventNode* root) {
             EventType* event = e;
             //Try to handle the event in a local handler first
-            auto it = listeners.find(info);
-            if (it != listeners.end()) {
+            auto it = m_listeners.find(info);
+            if (it != m_listeners.end()) {
                 //Go through each registered handler and execute it, cancelling if the event was cancelled
                 auto iter = it->second->begin();
                 while (iter != it->second->end()) {
@@ -159,8 +160,8 @@ namespace Poly {
         void dispatchResult(TypeInfo info, EventType* e, bool& propagateResult) {
             EventType* event = e;
             //Try to handle the event in a local handler first
-            auto it = resultListeners.find(info);
-            if (it != resultListeners.end()) {
+            auto it = m_resultListeners.find(info);
+            if (it != m_resultListeners.end()) {
                 //Go through each registered handler and execute it, cancelling if the event was cancelled
                 auto iter = it->second->begin();
                 while (iter != it->second->end()) {
@@ -182,8 +183,8 @@ namespace Poly {
         }
 
     private:
-        std::unordered_map<TypeInfo, std::multiset<std::pair<uint16_t, BaseListener*>>*, TypeInfo::HashFunction> listeners = {};
-        std::unordered_map<TypeInfo, std::multiset<std::pair<uint16_t, BaseListener*>>*, TypeInfo::HashFunction> resultListeners = {};
+        std::unordered_map<TypeInfo, std::multiset<std::pair<uint16_t, BaseListener*>>*, TypeInfo::HashFunction> m_listeners = {};
+        std::unordered_map<TypeInfo, std::multiset<std::pair<uint16_t, BaseListener*>>*, TypeInfo::HashFunction> m_resultListeners = {};
     };
 
 } // PolyEngine

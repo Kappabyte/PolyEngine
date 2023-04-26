@@ -1,25 +1,21 @@
-//
-// Created by avery on 2022-09-16.
-//
-
 #pragma once
 
 #include <thread>
 #include "poly/events/EventQueue.h"
 #include "poly/events/EventNodeBase.h"
-#include "poly/util/NamespaceID.h"
+#include "poly/util/NamespaceId.h"
 #include "poly/render/RenderTarget.h"
 
 namespace Poly {
 
     struct WindowProps {
-        std::string title = "PolyEngine";
+        std::string m_title = "PolyEngine";
 
-        bool fullscreen = false;
-        bool vsync = false;
+        bool m_fullscreen = false;
+        bool m_vsync = false;
 
-        uint16_t width = 800;
-        uint16_t height = 600;
+        uint16_t m_width = 800;
+        uint16_t m_height = 600;
     };
 
     enum class WindowState {
@@ -37,8 +33,10 @@ namespace Poly {
          * @param props The window properties.
          * @return Te created window.
          */
-        static Window* create(NamespaceID identifier, WindowProps props = WindowProps());
+        static Window* create(NamespaceId identifier, WindowProps props = WindowProps());
         virtual ~Window() = default;
+
+        static void initializePlatform();
 
         /**
          * Open the window and start rendering everything in the render queue.
@@ -59,7 +57,7 @@ namespace Poly {
         void setState(WindowState state);
 
     protected:
-        Window(NamespaceID identifier, WindowProps& props);
+        Window(NamespaceId identifier, WindowProps& props);
 
         virtual void init() = 0;
         virtual void update() = 0;
@@ -68,12 +66,13 @@ namespace Poly {
         void i_start();
     protected:
         WindowProps m_props;
-        const NamespaceID identifier;
+        const NamespaceId m_identifier;
         bool m_shouldClose = false;
     private:
         std::thread m_thread;
 
         std::mutex m_stateMutex = std::mutex();
+
         WindowState m_state = WindowState::INITIALIZING;
     };
 

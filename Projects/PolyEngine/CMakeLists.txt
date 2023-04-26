@@ -17,4 +17,6 @@ target_link_libraries(${PROJECT_NAME}
         glfw
         glm
         Glad
+        spdlog
+        nlohmann_json
         )

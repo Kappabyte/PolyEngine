@@ -16,3 +16,5 @@ add_subdirectory("${PROJECT_SOURCE_DIR}/Projects/PolyEditor" "${PROJECT_SOURCE_D
 add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/glfw" "${PROJECT_SOURCE_DIR}/bin/Libraries/glfw")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/Glad" "${PROJECT_SOURCE_DIR}/bin/Libraries/Glad")
 add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/glm" "${PROJECT_SOURCE_DIR}/bin/Libraries/glm")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/spdlog" "${PROJECT_SOURCE_DIR}/bin/Libraries/spdlog")
+add_subdirectory("${PROJECT_SOURCE_DIR}/Libraries/json" "${PROJECT_SOURCE_DIR}/bin/Libraries/json")

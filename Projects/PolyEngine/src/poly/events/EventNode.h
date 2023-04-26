@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-14.
-//
-
 #pragma once
 
 #include "EventNodeBase.h"
@@ -23,7 +19,7 @@ namespace Poly {
          */
         EventChildren getEventNodeChildren() override;
     private:
-        EventChildren children;
+        EventChildren m_children;
     };
 
 } // Poly

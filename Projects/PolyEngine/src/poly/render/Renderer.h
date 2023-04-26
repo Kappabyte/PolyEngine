@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-28.
-//
-
 #pragma once
 
 #include "poly/render/geometry/material/Material.h"
@@ -15,12 +11,11 @@ namespace Poly {
     public:
         static void begin(RenderTarget* pTarget);
 
-        static void command(RenderCommandType type, void* data);
-        static void draw(Shared<Mesh> mesh, Shared<Material> material);
+        static void setClearColour(float r, float g, float b);
 
         static void end();
     private:
-        static RenderTarget* target;
+        static RenderTarget* m_target;
     };
 
 } // Poly

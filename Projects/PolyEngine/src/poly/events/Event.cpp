@@ -2,10 +2,10 @@
 
 namespace Poly {
     void Event::setCancelled(bool cancelled) {
-        this->cancelled = cancelled;
+        this->m_cancelled = cancelled;
     }
 
-    bool Event::isCancelled() {
-        return this->cancelled;
+    bool Event::isCancelled() const {
+        return this->m_cancelled;
     }
 } // Poly

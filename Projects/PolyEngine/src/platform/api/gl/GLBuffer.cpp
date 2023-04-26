@@ -1,20 +1,16 @@
-//
-// Created by avery on 2022-09-28.
-//
-
 #include "GLBuffer.h"
 
 namespace Poly::GL {
     GLVertexBufferArray::GLVertexBufferArray() {
-        glGenVertexArrays(1, &arrayID);
+        glGenVertexArrays(1, &m_arrayId);
     }
 
     GLVertexBufferArray::~GLVertexBufferArray() {
-        glDeleteVertexArrays(1, &arrayID);
+        glDeleteVertexArrays(1, &m_arrayId);
     }
 
     void GLVertexBufferArray::bind() {
-        glBindVertexArray(arrayID);
+        glBindVertexArray(m_arrayId);
     }
 
     void GLVertexBufferArray::unbind() {
@@ -22,15 +18,15 @@ namespace Poly::GL {
     }
 
     GLVertexBuffer::GLVertexBuffer() {
-        glGenBuffers(1, &bufferID);
+        glGenBuffers(1, &m_bufferId);
     }
 
     GLVertexBuffer::~GLVertexBuffer() {
-        glDeleteBuffers(1, &bufferID);
+        glDeleteBuffers(1, &m_bufferId);
     }
 
     void GLVertexBuffer::bind() {
-        glBindBuffer(GL_ARRAY_BUFFER, bufferID);
+        glBindBuffer(GL_ARRAY_BUFFER, m_bufferId);
     }
 
     void GLVertexBuffer::unbind() {
@@ -42,19 +38,19 @@ namespace Poly::GL {
         glBufferData(GL_ARRAY_BUFFER, length, data, GL_STATIC_DRAW);
     }
 
-    GLint ShaderTypeToGLType(ShaderType type) {
+    GLint shaderTypeToGLType(ShaderType type) {
         switch(type){
             case ShaderType::FLOAT:
-            case ShaderType::FLOAT2:
-            case ShaderType::FLOAT3:
-            case ShaderType::FLOAT4:
-            case ShaderType::MAT3:
-            case ShaderType::MAT4:
+            case ShaderType::FLOAT_2:
+            case ShaderType::FLOAT_3:
+            case ShaderType::FLOAT_4:
+            case ShaderType::MAT_3:
+            case ShaderType::MAT_4:
                 return GL_FLOAT;
             case ShaderType::INT:
-            case ShaderType::INT2:
-            case ShaderType::INT3:
-            case ShaderType::INT4:
+            case ShaderType::INT_2:
+            case ShaderType::INT_3:
+            case ShaderType::INT_4:
                 return GL_INT;
             case ShaderType::BOOL:
                 return GL_BOOL;
@@ -64,29 +60,31 @@ namespace Poly::GL {
     void GLVertexBuffer::setLayout(std::vector<BufferElement> elements) {
         bind();
         BufferLayout layout(elements);
-        for(auto& element : layout.elements) {
-            glEnableVertexAttribArray(element.location);
-            glVertexAttribPointer(element.location, getShaderTypeCount(element.type), ShaderTypeToGLType(element.type), GL_FALSE, layout.stride, (void*)element.offset);
+        for(auto& element : layout.m_elements) {
+            glEnableVertexAttribArray(element.m_location);
+            glVertexAttribPointer(element.m_location, getShaderTypeCount(element.m_type),
+                                  shaderTypeToGLType(element.m_type), GL_FALSE, layout.m_stride, (void*)element.m_offset);
         }
     }
 
     void GLVertexBuffer::setLayout(BufferLayout layout) {
-        for(auto& element : layout.elements) {
-            glEnableVertexAttribArray(element.location);
-            glVertexAttribPointer(element.location, getShaderTypeCount(element.type), ShaderTypeToGLType(element.type), GL_FALSE, layout.stride, (void*)element.offset);
+        for(auto& element : layout.m_elements) {
+            glEnableVertexAttribArray(element.m_location);
+            glVertexAttribPointer(element.m_location, getShaderTypeCount(element.m_type),
+                                  shaderTypeToGLType(element.m_type), GL_FALSE, layout.m_stride, (void*)element.m_offset);
         }
     }
 
     GLIndexBuffer::GLIndexBuffer() {
-        glGenBuffers(1, &bufferID);
+        glGenBuffers(1, &m_bufferId);
     }
 
     GLIndexBuffer::~GLIndexBuffer() {
-        glDeleteBuffers(1, &bufferID);
+        glDeleteBuffers(1, &m_bufferId);
     }
 
     void GLIndexBuffer::bind() {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferID);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_bufferId);
     }
 
     void GLIndexBuffer::unbind() {

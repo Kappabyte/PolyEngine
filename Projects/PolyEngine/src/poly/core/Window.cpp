@@ -1,18 +1,14 @@
-//
-// Created by avery on 2022-09-16.
-//
-
 #include <stdexcept>
 #include <iostream>
+#include <utility>
 #include "Window.h"
 #include "platform/system/windows/WindowsWindow.h"
-#include "poly/util/NamespaceID.h"
-#include "Application.h"
+#include "poly/util/NamespaceId.h"
 
 namespace Poly {
-    Window* Window::create(NamespaceID identifier, WindowProps props) {
+    Window* Window::create(NamespaceId identifier, WindowProps props) {
         #if defined(Poly_Platform_Windows)
-            return new Windows::WindowsWindow(identifier, props);
+            return new Windows::WindowsWindow(std::move(identifier), std::move(props));
         #elif defined(Poly_Platform_Linux)
             return new LinuxWindow(m_props);
         #elif defined(Poly_Platform_MacOS)
@@ -22,7 +18,7 @@ namespace Poly {
         #endif
     }
 
-    Window::Window(NamespaceID identifier, Poly::WindowProps& props): identifier(identifier), m_props(props) {}
+    Window::Window(NamespaceId identifier, Poly::WindowProps& props): m_identifier(std::move(identifier)), m_props(props) {}
 
     void Window::start() {
         m_thread = std::thread(&Window::i_start, this);
@@ -33,13 +29,24 @@ namespace Poly {
         m_state = WindowState::INITIALIZING;
 
         while(true) {
+            setState(WindowState::UPDATING);
+
             update();
+
+            if(m_state == WindowState::UPDATING) {
+                setState(WindowState::IDLE);
+            }
+
+            // Wait for the next update
+            while(m_state == WindowState::IDLE && !m_shouldClose) {
+            }
+
             if(m_shouldClose) {
                 break;
             }
         }
         shutdown();
-        std::cout << "Window " << identifier.toString() << " closed" << std::endl;
+        std::cout << "Window " << m_identifier.toString() << " closed" << std::endl;
         setState(WindowState::CLOSED);
     }
 
@@ -57,5 +64,11 @@ namespace Poly {
         m_stateMutex.lock();
         this->m_shouldClose = shouldClose;
         m_stateMutex.unlock();
+    }
+
+    void Window::initializePlatform() {
+        #if defined(Poly_Platform_Windows)
+        Windows::WindowsWindow::platformInit();
+        #endif
     }
 } // Poly

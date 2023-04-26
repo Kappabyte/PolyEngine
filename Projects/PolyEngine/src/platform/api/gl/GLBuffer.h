@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-28.
-//
-
 #pragma once
 
 #include "poly/render/Buffer.h"
@@ -17,7 +13,7 @@ namespace Poly::GL {
         void bind() override;
         void unbind() override;
     private:
-        GLuint arrayID{};
+        GLuint m_arrayId{};
     };
 
     class GLVertexBuffer: public VertexBuffer {
@@ -32,7 +28,7 @@ namespace Poly::GL {
         void unbind() override;
         void data(void* data, uint32_t length) override;
     private:
-        GLuint bufferID{};
+        GLuint m_bufferId{};
     };
 
     class GLIndexBuffer: public IndexBuffer {
@@ -44,7 +40,7 @@ namespace Poly::GL {
         void unbind() override;
         void data(void* data, uint32_t length) override;
     private:
-        GLuint bufferID;
+        GLuint m_bufferId{};
     };
 
 } // GL

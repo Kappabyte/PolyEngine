@@ -11,28 +11,26 @@
 void TestLayer::init() {
     std::cout << "TestLayer init" << std::endl;
 
-    mesh = Poly::MakeShared<Poly::Mesh>();
+    mesh = Poly::makeShared<Poly::Mesh>();
     float a_Pos[] =  {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
         -0.5f, 0.5f, 0.0f,
-        0.5f, 0.5f, 0.0f
+        0.7f, 0.5f, 0.0f
     };
-    mesh->addVertexAttribute("a_Pos", Poly::ShaderType::FLOAT3, a_Pos, sizeof(a_Pos));
+    mesh->addVertexAttribute("a_Pos", Poly::ShaderType::FLOAT_3, a_Pos, sizeof(a_Pos));
     float a_Color[] = {
-        0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
-        1.0f, 0.0f, 1.0f,
-        0.0f, 1.0f, 0.0f,
+            (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX,
+            (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX,
+            (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX,
+            (float) rand() / RAND_MAX, (float) rand() / RAND_MAX, (float) rand() / RAND_MAX,
     };
-    mesh->addVertexAttribute("a_Color", Poly::ShaderType::FLOAT3, a_Color, sizeof(a_Color));
-    material = Poly::MakeShared<Poly::Material>(nullptr);
+    mesh->addVertexAttribute("a_Color", Poly::ShaderType::FLOAT_3, a_Color, sizeof(a_Color));
+    material = Poly::makeShared<Poly::Material>(nullptr);
 }
 
 void TestLayer::update() {
-    Poly::Renderer::begin(Poly::Application::get()->getWindow("poly:Test"));
-
+    Poly::Renderer::begin(Poly::Application::get()->getWindow("test"));
     Poly::Renderer::draw(mesh, material);
-
     Poly::Renderer::end();
 }

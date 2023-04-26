@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-22.
-//
-
 #pragma once
 
 #include <queue>
@@ -15,18 +11,17 @@ namespace Poly {
     public:
         RenderTarget() = default;
 
-        void submit(const RenderCommand& command);
+        void submit(Unique<RenderCommand> command);
 
-        RenderCommand pop();
+        Unique<RenderCommand> pop();
+        
         bool getRenderQueueEmpty();
 
         void flush();
 
-        std::queue<RenderCommand> getCommandQueue() const {
-            return commandQueue;
-        }
+        void executeRenderCommandQueue();
     private:
-        std::queue<RenderCommand> commandQueue;
-        std::mutex queueMutex;
+        std::queue<Unique<RenderCommand>> m_commandQueue;
+        std::mutex m_queueMutex;
     };
 }

@@ -29,12 +29,9 @@ namespace Poly {
          * @param event The event to add
          */
         void addToQueue(EventType* event) {
-            static_assert(std::is_base_of<Event, EventType>::value, "EventType not derived from Event");
-            std::cout << "Adding event: " << typeid(EventType).name() << std::endl;
-            lock.lock();
-            std::cout << "Adding event to queue" << std::endl;
-            queue.push(event);
-            lock.unlock();
+            auto lock = std::lock_guard(m_lock);
+            ASSERT((std::is_base_of<Event, EventType>::value), "EventType not derived from Event");
+            m_queue.push(event);
         }
 
         /**
@@ -42,18 +39,17 @@ namespace Poly {
          * @param eventNode The event node to dispatch the events to.
          */
         void dispatchEvents(IEventNode* eventNode) override {
-            lock.lock();
-            while(!queue.empty()) {
+            auto lock = std::lock_guard(m_lock);
+            while(!m_queue.empty()) {
                 std::cout << "Handling event: " << typeid(EventType).name() << std::endl;
-                auto event = queue.front();
-                queue.pop();
+                auto event = m_queue.front();
+                m_queue.pop();
                 eventNode->dispatch<EventType>(event);
             }
-            lock.unlock();
         }
     private:
-        std::mutex lock;
-        std::queue<EventType*> queue = {};
+        std::mutex m_lock;
+        std::queue<EventType*> m_queue = {};
     };
 
 

@@ -15,9 +15,9 @@ namespace Poly {
          * Check if the event is cancelled
          * @return Whether the event is cancelled
          */
-        bool isCancelled();
+        bool isCancelled() const;
     public:
-        bool cancelled = false;
+        bool m_cancelled = false;
     };
 
 } // Poly

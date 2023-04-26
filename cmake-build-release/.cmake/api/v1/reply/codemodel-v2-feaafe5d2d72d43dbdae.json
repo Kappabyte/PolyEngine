@@ -1,0 +1,321 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						5,
+						6,
+						8,
+						9
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/PolyEngine",
+					"jsonFile" : "directory-Projects.PolyEngine-Release-cec76a99ff14613ab0c3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "Projects/PolyEngine",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/PolyEditor",
+					"jsonFile" : "directory-Projects.PolyEditor-Release-4dbfff5526acf6a3547d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "Projects/PolyEditor",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glfw",
+					"childIndexes" : 
+					[
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-Libraries.glfw-Release-407d29c3b556057f868f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "Libraries/glfw",
+					"targetIndexes" : 
+					[
+						5
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glfw/src",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-Libraries.glfw.src-Release-2264e9c3fd471405aec7.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.4"
+					},
+					"parentIndex" : 3,
+					"projectIndex" : 2,
+					"source" : "Libraries/glfw/src",
+					"targetIndexes" : 
+					[
+						3,
+						6
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/Glad",
+					"jsonFile" : "directory-Libraries.Glad-Release-ae9aef80c2c1974ac1ed.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.23"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "Libraries/Glad",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glm",
+					"childIndexes" : 
+					[
+						7
+					],
+					"jsonFile" : "directory-Libraries.glm-Release-bd4eb489b43ccffe1b0d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "Libraries/glm"
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/glm/glm",
+					"jsonFile" : "directory-Libraries.glm.glm-Release-7ac3df5bd405ed7d2e30.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.2"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 4,
+					"source" : "Libraries/glm/glm"
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/spdlog",
+					"jsonFile" : "directory-Libraries.spdlog-Release-88fe59c8367f223ce5d5.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "Libraries/spdlog",
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/bin/Libraries/json",
+					"jsonFile" : "directory-Libraries.json-Release-bfe66a4fdf56b153ed11.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.1"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "Libraries/json"
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "PolyEngine",
+					"targetIndexes" : 
+					[
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "PolyEditor",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3,
+						4
+					],
+					"name" : "GLFW",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						5,
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "Glad",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6,
+						7
+					],
+					"name" : "glm",
+					"parentIndex" : 0
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "spdlog",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "nlohmann_json",
+					"parentIndex" : 0
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 5,
+					"id" : "Glad::@6f5a37a6d8a661a8eae6",
+					"jsonFile" : "target-Glad-Release-03e91859bb6eec6a5d0e.json",
+					"name" : "Glad",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "PolyEditor::@2408fd3a9fd4267a724a",
+					"jsonFile" : "target-PolyEditor-Release-01c12af54dbbadbf3106.json",
+					"name" : "PolyEditor",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "PolyEngine::@2ae8108dd20107554b8b",
+					"jsonFile" : "target-PolyEngine-Release-9ccabe72f7186adad4fc.json",
+					"name" : "PolyEngine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "glfw::@a20de203f1e4f2c49f79",
+					"jsonFile" : "target-glfw-Release-906e974a4f6e439e45e6.json",
+					"name" : "glfw",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "spdlog::@fd1ec4ec7b741d361ad2",
+					"jsonFile" : "target-spdlog-Release-512323b237f24a83b90d.json",
+					"name" : "spdlog",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "uninstall::@5725b2b92b7314fcf9bd",
+					"jsonFile" : "target-uninstall-Release-e778d49b932bedebc745.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "update_mappings::@a20de203f1e4f2c49f79",
+					"jsonFile" : "target-update_mappings-Release-d9bf3ad28be45abab6f0.json",
+					"name" : "update_mappings",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/avery/Code/projects/current/PolyEngine-New/cmake-build-release",
+		"source" : "C:/Users/avery/Code/projects/current/PolyEngine-New"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

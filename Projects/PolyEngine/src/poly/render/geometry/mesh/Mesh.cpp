@@ -1,24 +1,20 @@
-//
-// Created by avery on 2022-09-22.
-//
-
 #include "Mesh.h"
 #include "poly/render/shader/ShaderType.h"
 
 void Poly::Mesh::addVertexAttribute(const std::string &name, ShaderType type, float data[], size_t size) {
-    vertexAttributes.insert({name, VertexAttribute(type, data, size)});
+    m_vertexAttributes.insert({name, VertexAttribute(type, data, size)});
     // Construct the compiled vertex data
-    compiledVertexData.erase(compiledVertexData.begin(), compiledVertexData.end());
+    m_compiledVertexData.erase(m_compiledVertexData.begin(), m_compiledVertexData.end());
 
     size_t start = 0;
     while(true) {
-        for(auto& [name, attribute]: vertexAttributes) {
-            size_t count = getShaderTypeCount(attribute.type);
-            if(start * count + count > attribute.size / sizeof(float)) {
+        for(auto& [name, attribute]: m_vertexAttributes) {
+            size_t count = getShaderTypeCount(attribute.m_type);
+            if(start * count + count > attribute.m_size / sizeof(float)) {
                 goto end;
             }
             for(size_t i = start * count; i < start * count + count; i++) {
-                compiledVertexData.push_back(attribute.data[i]);
+                m_compiledVertexData.push_back(attribute.m_data[i]);
             }
         }
         start++;
@@ -27,4 +23,4 @@ void Poly::Mesh::addVertexAttribute(const std::string &name, ShaderType type, fl
     nullptr;
 }
 
-Poly::Mesh::VertexAttribute::VertexAttribute(Poly::ShaderType type, float* data, size_t size): type(type), data(data), size(size) {}
+Poly::Mesh::VertexAttribute::VertexAttribute(Poly::ShaderType type, float* data, size_t size): m_type(type), m_data(data), m_size(size) {}

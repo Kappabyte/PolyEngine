@@ -36,8 +36,8 @@ namespace Poly {
     protected:
         std::set<std::pair<uint32_t, Layer*>> getLayers();
     private:
-        std::set<std::pair<uint16_t, Layer*>> layers = {};
-        std::set<std::pair<uint16_t, Layer*>> overlayLayers = {};
+        std::set<std::pair<uint16_t, Layer*>> m_layers = {};
+        std::set<std::pair<uint16_t, Layer*>> m_overlayLayers = {};
     };
 
 } // Poly

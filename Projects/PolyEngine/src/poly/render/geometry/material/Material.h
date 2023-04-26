@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-22.
-//
-
 #pragma once
 
 #include <utility>
@@ -12,10 +8,10 @@
 namespace Poly {
     class Material {
     public:
-        explicit Material(Shared<Shader> shader): shader(std::move(shader)) {};
+        explicit Material(Shared<Shader> shader): m_shader(std::move(shader)) {};
 
-        [[nodiscard]] Shared<Shader> getShader() const { return shader; }
+        [[nodiscard]] Shared<Shader> getShader() const { return m_shader; }
     private:
-        Shared<Shader> shader;
+        Shared<Shader> m_shader;
     };
 }

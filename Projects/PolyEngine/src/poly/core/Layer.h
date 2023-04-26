@@ -11,7 +11,7 @@ namespace Poly {
          */
         virtual void init() = 0;
         /**
-         * Called when the layer is upated.
+         * Called when the layer is updated.
          */
         virtual void update() = 0;
     };

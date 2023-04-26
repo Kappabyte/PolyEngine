@@ -1,7 +1,3 @@
-//
-// Created by avery on 2022-09-16.
-//
-
 #pragma once
 
 #include <glad/glad.h>
@@ -12,14 +8,18 @@
 namespace Poly::Windows {
     class WindowsWindow: public Poly::Window {
     public:
-        explicit WindowsWindow(NamespaceID identifier, Poly::WindowProps props);
+        explicit WindowsWindow(NamespaceId identifier, Poly::WindowProps props);
         ~WindowsWindow() override;
 
         void init() override;
         void update() override;
         void shutdown() override;
+
+        static void platformInit();
+
     private:
-        GLFWwindow* window = nullptr;
-        Shared<Shader> shader;
+        GLFWwindow* m_window = nullptr;
+
+        static std::mutex m_mutex;
     };
 }
